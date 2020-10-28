@@ -5,12 +5,13 @@ class Settings
 public:
 	using ISetting = AutoTOML::ISetting;
 	using bSetting = AutoTOML::bSetting;
+	using sSetting = AutoTOML::sSetting;
 
 	static void Load()
 	{
 		try
 		{
-			const auto table = toml::parse_file("Data/F4SE/Plugins/BakaPluginTemplate.toml"s);
+			const auto table = toml::parse_file("Data/F4SE/Plugins/BakaRuntimeAutoTag.toml"s);
 			for (const auto& setting : ISetting::get_settings())
 			{
 				setting->load(table);

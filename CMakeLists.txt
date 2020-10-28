@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.18)
 # ---- Project ----
 
 project(
-	BakaPluginTemplate
+	BakaRuntimeAutoTag
 	VERSION 1.0.0
 	LANGUAGES CXX
 )
@@ -154,54 +154,54 @@ set(MSVC_TARGET_COMPILE_OPTIONS
 	/TP	# Specify Source File Type (C++)
 )
 
-add_library(BakaPluginTemplate SHARED
+add_library(BakaRuntimeAutoTag SHARED
 	${headers}
 	${sources}
 	${CMAKE_CURRENT_BINARY_DIR}/include/AutoTOML.hpp
 	${CMAKE_CURRENT_BINARY_DIR}/include/version.h
 	${CMAKE_CURRENT_BINARY_DIR}/version.rc
 	.clang-format
-	BakaPluginTemplate.toml
+	BakaRuntimeAutoTag.toml
 )
 
 set_property(
 	TARGET
-		BakaPluginTemplate
+		BakaRuntimeAutoTag
 		CommonLibF4
 	PROPERTY
 		MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
 )
 
-target_compile_features(BakaPluginTemplate
+target_compile_features(BakaRuntimeAutoTag
 	PUBLIC
 		cxx_std_17
 )
 
-target_compile_options(BakaPluginTemplate
+target_compile_options(BakaRuntimeAutoTag
 	PRIVATE
 		"$<$<BOOL:${MSVC}>:${MSVC_TARGET_COMPILE_OPTIONS}>"
 )
 
-target_include_directories(BakaPluginTemplate
+target_include_directories(BakaRuntimeAutoTag
 	PRIVATE 
 		${CMAKE_CURRENT_BINARY_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/include
 		${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-target_link_libraries(BakaPluginTemplate
+target_link_libraries(BakaRuntimeAutoTag
 	PUBLIC
 		CommonLibF4
 		spdlog::spdlog
 		tomlplusplus::tomlplusplus
 )
 
-target_link_options(BakaPluginTemplate
+target_link_options(BakaRuntimeAutoTag
 	PUBLIC
 		"$<$<AND:$<BOOL:${MSVC}>,$<CONFIG:RELEASE>>:/DEBUG:FULL>"
 )
 
-target_precompile_headers(BakaPluginTemplate
+target_precompile_headers(BakaRuntimeAutoTag
 	PRIVATE
 		src/PCH.h
 )
@@ -209,9 +209,9 @@ target_precompile_headers(BakaPluginTemplate
 # ---- Post build ----
 
 add_custom_command(
-	TARGET BakaPluginTemplate
+	TARGET BakaRuntimeAutoTag
 	POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:BakaPluginTemplate> $ENV{Fallout4Path}/Data/F4SE/Plugins/
-	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:BakaPluginTemplate> $ENV{Fallout4Path}/Data/F4SE/Plugins/
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/BakaPluginTemplate.toml $ENV{Fallout4Path}/Data/F4SE/Plugins/
+	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:BakaRuntimeAutoTag> $ENV{Fallout4Path}/Data/F4SE/Plugins/
+	COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_PDB_FILE:BakaRuntimeAutoTag> $ENV{Fallout4Path}/Data/F4SE/Plugins/
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/BakaRuntimeAutoTag.toml $ENV{Fallout4Path}/Data/F4SE/Plugins/
 )
